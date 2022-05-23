@@ -9,7 +9,6 @@ fs.readdir(path.join(__dirname,'styles'),(err,file1)=>{
       }) 
     file1.forEach((el)=>{
         if(path.parse(path.join(__dirname,'styles',`${el}`)).ext=='.css'){
-
             const readStream = fs.createReadStream(path.join(__dirname,'styles', `${el}`))
             readStream.on('data', (chunk) => {
               fs.appendFile(path.join(__dirname,'project-dist',`bundle.css`),`${chunk.toString()}`, (err)=>{

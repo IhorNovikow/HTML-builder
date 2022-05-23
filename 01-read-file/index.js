@@ -7,3 +7,4 @@ const readStream = fs.createReadStream(a)
 readStream.on('data', (chunk) => {
     console.log(chunk.toString())
 })
+//node 01-read-file

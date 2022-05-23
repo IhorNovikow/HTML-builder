@@ -1,44 +1,18 @@
 const fs = require('fs')
 const path = require('path')
 
-let a = path.join(__dirname, 'secret-folder')
-let q = [];
+fs.readdir(path.join(__dirname,'secret-folder'),{ withFileTypes: true }, (err,file)=>{
+     if(err){throw err}
 
-fs.readdir(a, { withFileTypes: true }, (err,file)=>{
-    if(err){throw err}     
-    let j = 0
-    let num =0
-    for(let i=0; i<file.length; i++){
-        if(file[i].isDirectory()){
-            let a = path.join(__dirname, 'secret-folder', `${file[i].name}`)
-            fs.readdir(a, (err,file2)=>{
-                if(err){throw err} 
-                for(let k = 0; k<file2.length; k++){
-                    let wey2 = path.join(__dirname, 'secret-folder',`${file[i].name.toString()}`,`${file2[k]}`)              
-                    let reshirenie = path.parse(wey2).ext
-                    let name = path.parse(wey2).name
-                    q[j]=`< ${name} >-< ${reshirenie} >` 
-                    
-                    fs.stat(wey2,(err,stats)=>{
-                        if(err){throw err} 
-                        q[j]=q[j]+`-< ${stats.size}b>`
-                        console.log(q)
-                        j++
-                    })
-                }
-            })
-        }else{
-            let wey2 = path.join(__dirname, 'secret-folder',`${file[i].name.toString()}`)              
-            let reshirenie = path.parse(wey2).ext
-            let name = path.parse(wey2).name    
-            q[j]=`< ${name} >-< ${reshirenie} >` 
-            fs.stat(wey2,(err,stats)=>{
-                if(err){throw err} 
-                q[num]=q[num]+`-< ${stats.size}b>`
-                num++
-            })           
-            j++
-        }
+file.forEach((el)=>{
+    if(el.isDirectory()){
+        true
+    }else{
+        fs.stat(path.join(__dirname, 'secret-folder', `${el.name}`),(err,stats)=>{if(err){throw err} 
+          console.log(`< ${path.parse(path.join(__dirname, 'secret-folder', `${el.name}`)).name} >-< ${path.parse(path.join(__dirname, 'secret-folder', `${el.name}`)).ext} >-< ${stats.size}b>`)
+            
+        })       
     }
+})
 })
 //node 03-files-in-folder
